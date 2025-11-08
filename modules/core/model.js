@@ -1,0 +1,48 @@
+export class Item {
+  constructor(name) {
+    this.name = name;
+  }
+}
+export class Weapon extends Item {
+  constructor(name, dmg = 0, crit = 0.05) {
+    super(name);
+    this.dmg = dmg;
+    this.crit = crit;
+  }
+}
+
+export class Potion extends Item {
+  constructor(name, heal = 10) {
+    super(name);
+    this.heal = heal;
+  }
+  use(t) {
+    const before = t.hp;
+    t.hp = Math.min(t.maxHp, t.hp + this.heal);
+    return t.hp - before;
+  }
+}
+
+export class Entity {
+  constructor(name, maxHp, baseDmg) {
+    this.name = name;
+    this.maxHp = maxHp;
+    this.baseDmg = baseDmg;
+  }
+  get alive() {
+    return this.hp > 0;
+  }
+}
+
+export class Hero extends Entity {
+  constructor(name, maxHp, baseDmg) {
+    super(name, maxHp, baseDmg);
+    this.inventory = [
+      new Weapon("Holzschwert", 1, 0.05),
+      new Potion("Kleiner Trank", 12),
+    ];
+    this.equipped = this.inventory.find((x) => x instanceof Weapon) ?? null;
+    this.score = 0;
+    this.achievements = {};
+  }
+}
