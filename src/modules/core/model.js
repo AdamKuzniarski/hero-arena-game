@@ -28,6 +28,7 @@ export class Entity {
     this.name = name;
     this.maxHp = maxHp;
     this.baseDmg = baseDmg;
+    this.hp = maxHp;
   }
   get alive() {
     return this.hp > 0;
@@ -44,5 +45,19 @@ export class Hero extends Entity {
     this.equipped = this.inventory.find((x) => x instanceof Weapon) ?? null;
     this.score = 0;
     this.achievements = {};
+
+    this.level = 1;
+    this.xp = 0;
+  }
+
+  get nextLevelXp() {
+    return this.level * 10;
+  }
+}
+
+export class Enemy extends Entity {
+  constructor(name, maxHp, baseDmg, tier = 1) {
+    super(name, maxHp, baseDmg);
+    this.tier = tier;
   }
 }

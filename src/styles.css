@@ -1,34 +1,56 @@
 @import "tailwindcss";
 
-@theme{
-    --color-brand-500: oklch(0.69 0.18 260);
-    --color-brand-600: oklch(0.62 0.20 260);
-    --radius-card:16px;
-    --spacing-18:4.5rem;
-    --breakpoint-3xl:96rem;
-    --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+@theme {
+  --color-brand-500: oklch(0.69 0.18 260);
+  --color-brand-600: oklch(0.62 0.2 260);
+  --radius-card: 16px;
+  --spacing-18: 4.5rem;
+  --breakpoint-3xl: 96rem;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer components {
-    .card {
-        background-color: var(--color-white);
-        border-radius: var(--radius-card);
-        box-shadow: var(--shadow-xl);
-    }
-    .btn {
-        display: inline-flex; align-items: center; justify-content: center;
-        padding: var(--spacing-3) var(--spacing-4);
-        border-radius: var(--radius-md);
-        font-weight: 600;
-    }
+  .card {
+    background-color: var(--color-white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-xl);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-3) var(--spacing-4);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    color: white;
+  }
 
-    .btn-primary { background: var(--color-brand-600); color: white; }
-    .btn-ghost { background: color-mix(in in oklch, var(--color-brand-500)10%,transparent);}
+  .btn-primary {
+    background: var(--color-brand-600);
+    color: white;
+  }
+  .btn-ghost {
+    background: color-mix(in in oklch, var(--color-brand-500) 10%, transparent);
+  }
 }
 
 @layer base {
-    progress { appearance: none; height: .625rem; width: 100%; border-radius: 9999px;}
-    progress::-webkit-progress-bar { background: var(--color-slate-200); border-radius: 9999px;}
-    progress::-webkit-progress-value { background: var(--color-emerald-500); border-radius: 9999px;}
-    progress::-moz-progress-bar { background: var(--color-emerald-500); border-radius: 9999px;}
+  progress {
+    appearance: none;
+    height: 0.625rem;
+    width: 100%;
+    border-radius: 9999px;
+  }
+  progress::-webkit-progress-bar {
+    background: var(--color-slate-200);
+    border-radius: 9999px;
+  }
+  progress::-webkit-progress-value {
+    background: var(--color-emerald-500);
+    border-radius: 9999px;
+  }
+  progress::-moz-progress-bar {
+    background: var(--color-emerald-500);
+    border-radius: 9999px;
+  }
 }

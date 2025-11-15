@@ -1,19 +1,19 @@
 import { clamp, randInt } from "./rand.js";
-import { Enemy, Weapon } from "./model.js";
+import { Enemy, Weapon, Potion } from "./model.js";
 
 export function rollDamage(attacker) {
   const base = clamp(
-    randInt(attacker.baseDmg - 1, attacker, attacker.baseDmg + 1),
+    randInt(attacker.baseDmg - 1, attacker.baseDmg + 1),
     0,
     999
   );
   let dmg = Math.max(1, base);
   if (
-    attacker.eqipped instanceof Weapon &&
-    Math.random() < attacker.eqipped.crit
+    attacker.equipped instanceof Weapon &&
+    Math.random() < attacker.equipped.crit
   )
     dmg *= 2;
-  return dmg + (attacker.eqipped?.dmg ?? 0);
+  return dmg + (attacker.equipped?.dmg ?? 0);
 }
 
 export function attack(attacker, defender) {
@@ -22,23 +22,20 @@ export function attack(attacker, defender) {
   return d;
 }
 
-export async function lootFor(enemy) {
+export function lootFor(enemy) {
   const drops = [];
-  if (Math.random() < 0.5) {
+  if (Math.random() < 0.5) drops.push(new Potion("Trank", randInt(8, 16)));
+  if (Math.random() < 0.35)
     drops.push(
-      new (await import("./model.js")).Potion("Trank", randInt(8, 16))
-    );
-  }
-
-  if (Math.random() < 0.35) {
-    drops.push(
-      new (await import("./model.js")).Weapon(
-        ["Keule", "Säbel", "Speer"][(randInt(1, 4), Math.random() * 0.2)]
+      new Weapon(
+        ["Keule", "Säbel", "Speer"][randInt(0, 2)],
+        randInt(1, 4),
+        Math.random() * 0.2
       )
     );
-  }
   return drops;
 }
+
 export function makeEnemy(level) {
   const names = [
     "Schleim",
