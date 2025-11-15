@@ -29,13 +29,23 @@ export function bindEvents(app, state) {
 
         if (!state.enemy.alive) {
           state.hero.score++;
+
+          const xpGained = state.enemy.tier * 3;
+          const leveledUp = state.hero.gainXp(xpGained);
+
           const drops = lootFor(state.enemy);
           drops.forEach((drop) => state.hero.inventory.push(drop));
+
           pushLog(
-            `💥 ${state.enemy.name} besiegt. Loot: ${
+            `💥 ${state.enemy.name} besiegt. +${xpGained} XP. Loot: ${
               drops.map((x) => x.name).join(", ") || "nix"
             }`
           );
+          if (leveledUp) {
+            pushLog(
+              `✨ Level Up! ${state.hero.name} ist jetzt ${state.hero.level} (HP: ${state.hero.maxHp}, DMG: ${state.hero.baseDmg}).`
+            );
+          }
         } else {
           const taken = attack(state.enemy, state.hero);
           pushLog(`🩸 ${state.enemy.name} kontert für ${taken}.`);

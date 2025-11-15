@@ -1,7 +1,7 @@
 export function render(app, state) {
   const { hero, enemy, log = [] } = state;
 
-console.log("RENDER LOG:", log)
+  console.log("RENDER LOG:", log);
 
   app.innerHTML = `
 <header class="mb-6">
@@ -9,21 +9,26 @@ console.log("RENDER LOG:", log)
 </header>
 
 <section class="grid gap-4 md:grid-cols-2">
-  <!-- HERO -->
+
+<!-- HERO -->
   <div class="card p-4 text-slate-900">
     <h2 class="font-semibold">${hero.name}</h2>
     <progress value="${hero.hp}" max="${hero.maxHp}" class="my-2"></progress>
     <p class="text-sm/6">
-      ${hero.hp} / ${hero.maxHp} HP • Schaden: ${hero.baseDmg}
-    </p>
-    <p class="mt-2">
-      <span class="badge bg-slate-100 text-slate-900">
-        Waffe: ${hero.equipped?.name ?? "keine"}
-      </span>
-    </p>
-    <p class="mt-1 text-sm">
-      Score: <span class="font-semibold">${hero.score}</span>
-    </p>
+  ${hero.hp} / ${hero.maxHp} HP • Schaden: ${hero.baseDmg}
+</p>
+<p class="text-sm mt-1">
+  Level: <span class="font-semibold">${hero.level}</span>
+  • XP: ${hero.xp} / ${hero.nextLevelXp ?? hero.level * 10}
+</p>
+<p class="mt-2">
+  <span class="badge bg-slate-100 text-slate-900">
+    Waffe: ${hero.equipped?.name ?? "keine"}
+  </span>
+</p>
+<p class="mt-1 text-sm">
+  Score: <span class="font-semibold">${hero.score}</span>
+</p>
   </div>
 
   <!-- ENEMY -->
@@ -63,11 +68,11 @@ console.log("RENDER LOG:", log)
     invElement.innerHTML = hero.inventory
       .map((item, index) => `<li>#${index + 1} ${item.name}</li>`)
       .join("");
-    }
-    
-    const logElement = app.querySelector("#log");
-    if (logElement) {
-      logElement.textContent = log.join("\n");
-      console.log("DOM LOG TEXT:", logElement.textContent)
+  }
+
+  const logElement = app.querySelector("#log");
+  if (logElement) {
+    logElement.textContent = log.join("\n");
+    console.log("DOM LOG TEXT:", logElement.textContent);
   }
 }

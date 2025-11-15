@@ -53,6 +53,21 @@ export class Hero extends Entity {
   get nextLevelXp() {
     return this.level * 10;
   }
+
+  gainXp(amount) {
+    this.xp += amount;
+    let leveledUp = false;
+
+    while (this.xp >= this.nextLevelXp) {
+      this.xp -= this.nextLevelXp;
+      this.level++;
+      this.maxHp += 5;
+      this.baseDmg += 1;
+      this.hp = this.maxHp;
+      leveledUp = true;
+    }
+    return leveledUp;
+  }
 }
 
 export class Enemy extends Entity {
