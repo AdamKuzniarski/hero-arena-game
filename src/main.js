@@ -1,4 +1,5 @@
-import "./styles.css";
-import { initGame } from "./modules/game.js";
+import './styles.css'
+import { initGame } from './modules/game.js'
 
-initGame(document.getElementById("app"));
+initGame(document.getElementById('app'))
+//test comment!
