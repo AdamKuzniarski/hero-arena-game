@@ -48,6 +48,8 @@ export function makeEnemy(level) {
   ];
   const name = names[randInt(0, names.length - 1)];
   const tier = Math.ceil(level / 3);
+	const behaviors = ["normal", "agressiv"];
+	const behavior = behaviors[randInt(0, behaviors.length - 1)];
   return new Enemy(
     `${name} (L${level})`,
     randInt(10 + level * 2, 16 + level * 3),
