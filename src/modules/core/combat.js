@@ -21,7 +21,7 @@ export function attack(attacker, defender) {
   defender.hp = clamp(defender.hp - d, 0, defender.maxHp);
   return d;
 }
-
+// Generate loot for a defeated enemy
 export function lootFor(enemy) {
   const drops = [];
   if (Math.random() < 0.5) drops.push(new Potion("Trank", randInt(8, 16)));
@@ -57,3 +57,4 @@ export function makeEnemy(level) {
     tier
   );
 }
+// --- IGNORE ---
