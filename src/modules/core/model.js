@@ -10,11 +10,11 @@ export class Weapon extends Item {
     this.crit = crit;
   }
 }
-
+//test comment
 export class Potion extends Item {
   constructor(name, heal = 10) {
     super(name);
-    this.heal = heal;
+    this.heal = heal; // Amount of HP this potion heals
   }
   use(t) {
     const before = t.hp;
