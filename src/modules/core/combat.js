@@ -11,6 +11,10 @@ export function rollDamage(attacker) {
   if (
     attacker.equipped instanceof Weapon &&
     Math.random() < attacker.equipped.crit
+                                 /
+sdb      8:16   1  59,8G  0 disk 
+└─sdb1   8:17   1   2,5G  0 part /run/media/adam/Fedora-WS-Live-43
+zram0  251:0    0     8G  0 disk [SWAP]
   )
     dmg *= 2;
   return dmg + (attacker.equipped?.dmg ?? 0);
@@ -57,4 +61,3 @@ export function makeEnemy(level) {
     tier
   );
 }
-// --- IGNORE ---
