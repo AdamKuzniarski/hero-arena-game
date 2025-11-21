@@ -1,7 +1,7 @@
 export function render(app, state) {
-  const { hero, enemy, log = [] } = state;
+  const { hero, enemy, log = [] } = state
 
-  console.log("RENDER LOG:", log);
+  console.log('RENDER LOG:', log)
 
   app.innerHTML = `
 <header class="mb-6">
@@ -23,7 +23,7 @@ export function render(app, state) {
 </p>
 <p class="mt-2">
   <span class="badge bg-slate-100 text-slate-900">
-    Waffe: ${hero.equipped?.name ?? "keine"}
+    Waffe: ${hero.equipped?.name ?? 'keine'}
   </span>
 </p>
 <p class="mt-1 text-sm">
@@ -38,6 +38,16 @@ export function render(app, state) {
     <p class="text-sm/6">
       ${enemy.hp} / ${enemy.maxHp} HP • Schaden: ${enemy.baseDmg}
     </p>
+  </div>
+  <div class="card p-4 text-slate-900">
+<h2 class="font-semibold>${enemy.name}</h2>
+<progress value="${enemy.hp}" max="${enemy.maxHp}" class="my-2"></progress>
+      <p class="text-sm/6">
+${enemy.hp} / ${enemy.maxHp} HP • Schaden: ${enemy.baseDmg} 
+      </p>
+      <p class="text-xs mt-1>
+
+        </p>
   </div>
 </section>
 
@@ -61,18 +71,18 @@ export function render(app, state) {
     <pre id="log" class="mt-2 max-h-60 overflow-auto text-xs text-slate-900"></pre>
   </div>
 </section>
-`;
+`
 
-  const invElement = app.querySelector("#inv");
+  const invElement = app.querySelector('#inv')
   if (invElement) {
     invElement.innerHTML = hero.inventory
       .map((item, index) => `<li>#${index + 1} ${item.name}</li>`)
-      .join("");
+      .join('')
   }
 
-  const logElement = app.querySelector("#log");
+  const logElement = app.querySelector('#log')
   if (logElement) {
-    logElement.textContent = log.join("\n");
-    console.log("DOM LOG TEXT:", logElement.textContent);
+    logElement.textContent = log.join('\n')
+    console.log('DOM LOG TEXT:', logElement.textContent)
   }
 }
