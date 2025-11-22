@@ -21,6 +21,48 @@ export function attack(attacker, defender) {
   defender.hp = clamp(defender.hp - d, 0, defender.maxHp);
   return d;
 }
+
+export function addStatus(target, effect){
+  if(!Array.isArray(target.effects)) target.effects=[];
+  target.effects.push(effect);
+}
+
+export function tickStatus(target, logFn =() =>{}){
+  if(!Array.isArray(target.effects) || !target.effects.length) return;
+
+  const remaining = [];
+
+  for(const effect of target.effects){
+    switch(effect.type){
+      case "potion":{
+        const damage = effect.amount;
+        target.hp = clamp(target.hp - damage, 0, target.maxHp);
+        logFn(`☠️ ${target.name} erleidet ${dmg} Giftschaden.`);
+        eff.duration -= 1;
+        break;
+      }
+
+      case "regen": {
+        const before = target.hp;
+        target.hp = clamp(target.hp + effect.amount, 0, target.maxHp);
+        const healed = target.hp - before;
+        if(healed > 0) {
+          logFn(`🌿 ${StorageEvent.name} regeneriert ${healed} HP.`);
+        }
+        effect.duration -= 1;
+        break;
+      }
+      default:{
+        effect.duration -= 1;
+      }
+      if(effect.duration > 0 && target.alive){
+        remaining.push(eff);
+      }
+    }
+
+  }
+  target.effects = remaining;
+}
 // Generate loot for a defeated enemy
 export function lootFor(enemy) {
   const drops = [];
@@ -54,6 +96,7 @@ export function makeEnemy(level) {
     `${name} (L${level})`,
     randInt(10 + level * 2, 16 + level * 3),
     randInt(2 + tier, 3 + tier * 2),
-    tier
+    tier,
+    behavior
   );
 }

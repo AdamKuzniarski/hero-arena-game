@@ -29,6 +29,7 @@ export class Entity {
     this.maxHp = maxHp;
     this.baseDmg = baseDmg;
     this.hp = maxHp;
+    this.effects =[];
   }
   get alive() {
     return this.hp > 0;
@@ -71,8 +72,9 @@ export class Hero extends Entity {
 }
 
 export class Enemy extends Entity {
-  constructor(name, maxHp, baseDmg, tier = 1) {
+  constructor(name, maxHp, baseDmg, tier = 1, behavior ="normal") {
     super(name, maxHp, baseDmg);
     this.tier = tier;
+    this.behavior = behavior; // normall | "aggressiv"
   }
 }
