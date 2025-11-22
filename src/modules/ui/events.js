@@ -50,7 +50,7 @@ export function bindEvents(app, state) {
           let taken = attack(state.enemy, state.hero)
           pushLog(`🩸 ${state.enemy.name} kontert für ${taken}.`)
 
-          if (state.enemy.includes('Ghul') && state.hero.alive && Math.random() < 0.4) {
+          if (state.enemy.name.includes('Ghul') && state.hero.alive && Math.random() < 0.4) {
             addStatus(state.hero, {
               type: 'poison',
               amount: 2, //Giftschaden pro Runde
@@ -59,7 +59,7 @@ export function bindEvents(app, state) {
             pushLog(`☠️ ${state.hero.name} wurde vergiftet!`)
           }
 
-          if (state.enemy.behavior === 'aggresiv' && state.hero.alive && Math.random() < 0.25) {
+          if (state.enemy.behavior === 'aggressiv' && state.hero.alive && Math.random() < 0.25) {
             const extra = attack(state.enemy, state.hero)
             taken += extra
             pushLog(
@@ -93,12 +93,22 @@ export function bindEvents(app, state) {
           })
           pushLog(`🌿 ${state.hero.name} spürt eine heilende Aura.`)
         } else {
-          const healed = potion.use(state.hero)
+          let healed = 0
+
+          if (typeof potion.use === 'function') {
+            // echter Potion (Klasseninstanz)
+            healed = potion.use(state.hero)
+          } else if (typeof potion.heal === 'number') {
+            // plain Objekt aus localStorage
+            const before = state.hero.hp
+            state.hero.hp = Math.min(state.hero.maxHp, state.hero.hp + potion.heal)
+            healed = state.hero.hp - before
+          } else {
+            console.warn('weirder Potion-Typ:', potion)
+          }
+
           pushLog(`🧪 Heilung: +${healed} HP.`)
         }
-
-        const healed = potion.use(state.hero)
-        pushLog(`🧪 Heilung: +${healed} HP.`)
 
         const idx = state.hero.inventory.indexOf(potion)
         if (idx > -1) state.hero.inventory.splice(idx, 1) // Verbrauchsitem
@@ -133,6 +143,7 @@ export function bindEvents(app, state) {
         state.enemy = makeEnemy(state.level)
         pushLog(`➡️ Neuer Gegner: ${state.enemy.name}`)
         render(app, state)
+        save('arena:v4', state.hero)
         break
       }
 
