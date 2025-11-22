@@ -14,13 +14,12 @@ export function render(app, state) {
   <div class="card p-4 text-slate-900">
     <h2 class="font-semibold">${hero.name}</h2>
     <progress value="${hero.hp}" max="${hero.maxHp}" class="my-2"></progress>
-    <p class="text-sm/6">
+   <p class="text-sm/6">
   ${hero.hp} / ${hero.maxHp} HP • Schaden: ${hero.baseDmg}
 </p>
-<p class="text-sm mt-1">
-  Level: <span class="font-semibold">${hero.level}</span>
-  • XP: ${hero.xp} / ${hero.nextLevelXp ?? hero.level * 10}
-    
+<p class="mt-1 text-sm">
+  Schild:
+  ${hero.shield ? `${hero.shield.name} (${hero.shield.hp}/${hero.shield.maxHp} HP)` : 'kein'}
 </p>
 <p class="mt-2">
   <span class="badge bg-slate-100 text-slate-900">
@@ -33,27 +32,17 @@ export function render(app, state) {
   </div>
 
   <!-- ENEMY -->
-  <div class="card p-4 text-slate-900">
+    <div class="card p-4 text-slate-900">
     <h2 class="font-semibold">${enemy.name}</h2>
     <progress value="${enemy.hp}" max="${enemy.maxHp}" class="my-2"></progress>
     <p class="text-sm/6">
       ${enemy.hp} / ${enemy.maxHp} HP • Schaden: ${enemy.baseDmg}
     </p>
+    <p class="text-xs mt-1">
+      Verhalten: ${enemy.behavior === 'aggressiv' ? '😈 aggressiv' : '😐 normal'}
+    </p>
   </div>
-  <div class="card p-4 text-slate-900">
-<h2 class="font-semibold>${enemy.name}</h2>
-<progress value="${enemy.hp}" max="${enemy.maxHp}" class="my-2"></progress>
-      <p class="text-sm/6">
-${enemy.hp} / ${enemy.maxHp} HP • Schaden: ${enemy.baseDmg} 
-      </p>
-      <p class="text-xs mt-1>
- ${
-        enemy.behavior === "aggressiv"
-          ? "😈 aggressiv"
-          : "😐 normal"
-      }
-        </p>
-  </div>
+
 </section>
 
 <!-- ACTIONS -->

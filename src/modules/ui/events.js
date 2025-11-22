@@ -47,8 +47,23 @@ export function bindEvents(app, state) {
             )
           }
         } else {
+          const beforeShield = state.hero.shield?.hp ?? 0
+          const hadShield = !!state.hero.shield
+
           let taken = attack(state.enemy, state.hero)
           pushLog(`🩸 ${state.enemy.name} kontert für ${taken}.`)
+
+          if (hadShield) {
+            const afterShield = state.hero.shield?.hp ?? 0
+            const absorbed = beforeShield - afterShield
+
+            if (absorbed > 0) {
+              pushLog(`🛡️ ${state.hero.name}s Schild absorbiert ${absorbed} Schaden.`)
+              if (!state.hero.shield) {
+                pushLog(`💥 Das Schild von ${state.hero.name} zerbricht!`)
+              }
+            }
+          }
 
           if (state.enemy.name.includes('Ghul') && state.hero.alive && Math.random() < 0.4) {
             addStatus(state.hero, {

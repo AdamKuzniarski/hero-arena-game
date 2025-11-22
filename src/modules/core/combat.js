@@ -10,7 +10,22 @@ export function rollDamage(attacker) {
 
 export function attack(attacker, defender) {
   const d = rollDamage(attacker)
-  defender.hp = clamp(defender.hp - d, 0, defender.maxHp)
+  let remaining = d
+
+  if (defender.shield && defender.shield.hp > 0) {
+    const absorbed = Math.min(defender.shield.hp, remaining)
+    defender.shield.hp -= absorbed
+    remaining -= absorbed
+
+    if (defender.shield.hp <= 0) {
+      defender.shield = null
+    }
+  }
+
+  if (remaining > 0) {
+    defender.hp = clamp(defender.hp - remaining, 0, defender.maxHp)
+  }
+
   return d
 }
 
@@ -74,7 +89,7 @@ export function makeEnemy(level) {
   const names = ['Schleim', 'Goblin', 'Skelett', 'Wolf', 'Bandit', 'Ghul', 'Ork']
   const name = names[randInt(0, names.length - 1)]
   const tier = Math.ceil(level / 3)
-  const behaviors = ['normal', 'agressiv']
+  const behaviors = ['normal', 'aggressiv']
   const behavior = behaviors[randInt(0, behaviors.length - 1)]
   return new Enemy(
     `${name} (L${level})`,
