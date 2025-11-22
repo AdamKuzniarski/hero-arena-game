@@ -20,6 +20,7 @@ export function render(app, state) {
 <p class="text-sm mt-1">
   Level: <span class="font-semibold">${hero.level}</span>
   • XP: ${hero.xp} / ${hero.nextLevelXp ?? hero.level * 10}
+    
 </p>
 <p class="mt-2">
   <span class="badge bg-slate-100 text-slate-900">
@@ -46,7 +47,11 @@ export function render(app, state) {
 ${enemy.hp} / ${enemy.maxHp} HP • Schaden: ${enemy.baseDmg} 
       </p>
       <p class="text-xs mt-1>
-
+ ${
+        enemy.behavior === "aggressiv"
+          ? "😈 aggressiv"
+          : "😐 normal"
+      }
         </p>
   </div>
 </section>
