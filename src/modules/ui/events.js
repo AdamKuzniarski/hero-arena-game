@@ -47,8 +47,15 @@ export function bindEvents(app, state) {
             );
           }
         } else {
-          const taken = attack(state.enemy, state.hero);
+          let  taken = attack(state.enemy, state.hero);
           pushLog(`🩸 ${state.enemy.name} kontert für ${taken}.`);
+
+          if(state.enemy.behavior === "aggresiv" && state.hero.alive && Math.random()< 0.25){
+            const extra = attack(state.enemy, state.hero);
+            taken += extra;
+            pushLog(`😈 ${state.enemy.name} rastet aus und greift ein zweites Mal an für ${extra} Schaden!`);
+          }
+          
           if (!state.hero.alive)
             pushLog(`💀 ${state.hero.name} wurde besiegt.`);
         }
