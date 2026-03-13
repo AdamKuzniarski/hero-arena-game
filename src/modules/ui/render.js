@@ -5,7 +5,7 @@ export function render(app, state) {
 
   app.innerHTML = `
 <header class="mb-6">
-  <h1 class="text-2xl font-display font-bold tracking-tight text-slate-100">Monster-Arena</h1>
+  <h1 class="text-2xl font-display font-bold tracking-tight text-slate-100">Hero Arena</h1>
 </header>
 
 <section class="grid gap-4 md:grid-cols-2">
